@@ -30,19 +30,19 @@ class GOLViewModel {
         var tempModel = [[GameModel]]()
         for cell in aliveCells {
             let neighbors = configureNeighborsForCell(cell: cell)
-            let (aliveNeighborsForChosenCell, deadNeighborsForChosenCell) = checkNeighborCellsLifeStatus(model: myModel, neighbors: neighbors, cell: cell)
-            if aliveNeighborsForChosenCell.count < 2{
+            let (aliveNeighborsForAliveCell, deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(model: myModel, neighbors: neighbors, cell: cell)
+            if aliveNeighborsForAliveCell.count < 2{
                 var myCell = cell
                 myCell.lifeStatus = .dead
                 tempModel.append([myCell])
                 continue
-            }else if aliveNeighborsForChosenCell.count > 3 {
+            }else if aliveNeighborsForAliveCell.count > 3 {
                 var myCell = cell
                 myCell.lifeStatus = .dead
                 tempModel.append([myCell])
                 continue
             }
-            let deadNeighborCells = deadNeighborsForChosenCell.map({ return myModel[$0] })
+            let deadNeighborCells = deadNeighborsForAliveCell.map({ return myModel[$0] })
             let rebornCells = checkDeadNeighborsForReborn(deadCells: deadNeighborCells, model: myModel)
             if rebornCells.count > 0 {
                 tempModel.append(rebornCells)
