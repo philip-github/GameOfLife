@@ -5,19 +5,6 @@
 //  Created by Philip Twal on 9/14/22.
 //
 
-
-func generateData() -> [GameModel] {
-    var gameModel = [GameModel]()
-    for i in 0..<100 {
-        gameModel.append(
-            GameModel(
-                id: "\(i)",
-                lifeStatus: .dead)
-        )
-    }
-    return gameModel
-}
-
 import Foundation
 
 class GOLViewModel {
@@ -124,7 +111,6 @@ class GOLViewModel {
         for cell in deadCells{
             let cellNeighbors = configureNeighborsForCell(cell: cell)
             let (aliveNeighbors, _) = checkNeighborCellsLifeStatus(model: model, neighbors: cellNeighbors, cell: cell)
-//            let aliveNeighborCells = aliveNeighbors.map({ return model[$0] })
             if aliveNeighbors.count == 3 {
                 var rebornedCell = cell
                 rebornedCell.lifeStatus = .alive
