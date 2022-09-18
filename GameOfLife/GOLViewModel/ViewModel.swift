@@ -16,7 +16,7 @@ class GOLViewModel {
         static let rightBound = [9,19,29,39,49,59,69,79,89,99]
     }
     
-    func play(with model: [Cell]) -> [Cell]? {
+    func configureGamePlay(with model: [Cell]) -> [Cell]? {
         var myModel = model
         let aliveCells = model.filter({ return $0.lifeStatus == .alive }) // O(n)
         if aliveCells.count <= 2{
