@@ -43,7 +43,7 @@ final class GridViewController: UIViewController {
         button.frame = CGRect(x: (view.width/2) - (view.width/1.5)/2,
                               y: collectionView.bottom,
                               width: view.width/1.5,
-                              height: 70)
+                              height: 60)
         button.setTitle("Play", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         button.setTitleColor(.white, for: .normal)

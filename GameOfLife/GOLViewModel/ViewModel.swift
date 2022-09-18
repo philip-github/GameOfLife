@@ -60,6 +60,8 @@ class GOLViewModel {
         return myModel
     }
     
+    
+    /// This method will configure the neighbors positions for the givin cell
     func configureNeighborsForCell(cell: Cell) -> [Int] {
         var neighborsCells = [Int]()
         if let aliveCellPosition = Int(cell.id) {
