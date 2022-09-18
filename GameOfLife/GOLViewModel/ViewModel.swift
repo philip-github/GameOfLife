@@ -20,9 +20,7 @@ class GOLViewModel {
         var myModel = model
         let aliveCells = model.filter({ return $0.lifeStatus == .alive }) // O(n)
         if aliveCells.count <= 2{
-            for cell in aliveCells {  // O(n)
-                myModel[cell.id].lifeStatus = .dead
-            }
+            let _ = aliveCells.map({ return myModel[$0.id].lifeStatus = .dead })
             return myModel
         }
         var newCells = [Cell]()
