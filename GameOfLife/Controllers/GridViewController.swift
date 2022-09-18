@@ -10,6 +10,7 @@ import UIKit
 final class GridViewController: UIViewController {
     
     private var collectionView: UICollectionView?
+    private var viewModel = GOLViewModel()
     private var gameModel = [Cell]()
     
     private let button: UIButton = {
@@ -75,7 +76,7 @@ final class GridViewController: UIViewController {
     
     @objc private func didTapPlayButton(){
         guard gameModel.count > 0 else { return }
-        if let newModel = GOLViewModel().configureGamePlay(with: gameModel) {
+        if let newModel = viewModel.configureGamePlay(with: gameModel) {
             DispatchQueue.main.async { [weak self] in
                 self?.gameModel = newModel
                 self?.collectionView?.reloadData()
