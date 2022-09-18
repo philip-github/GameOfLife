@@ -21,15 +21,14 @@ class GOLViewModel {
         let aliveCells = model.filter({ return $0.lifeStatus == .alive }) // O(n)
         if aliveCells.count <= 2{
             for cell in aliveCells {  // O(n)
-                if let position = Int(cell.id) {
-                    myModel[position].lifeStatus = .dead
-                }
+                myModel[cell.id].lifeStatus = .dead
             }
             return myModel
         }
         var newCells = [Cell]()
         for cell in aliveCells {
             let neighbors = configureNeighborsForCell(cell: cell)
+            guard neighbors.count > 0 else { continue }
             let (aliveNeighborsForAliveCell,
                  deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(cells: myModel,
                                                                            neighborsPositions: neighbors)
@@ -51,11 +50,7 @@ class GOLViewModel {
                 newCells.append(contentsOf: rebornCells)
             }
         }
-        for i in newCells {
-            if let value = Int(i.id){
-                myModel[value] = i
-            }
-        }
+        let _ = newCells.map({ return myModel[$0.id] = $0 })
         return myModel
     }
     
@@ -63,44 +58,44 @@ class GOLViewModel {
     /// This method will configure the neighbors positions for the givin cell
     func configureNeighborsForCell(cell: Cell) -> [Int] {
         var neighborsCells = [Int]()
-        if let aliveCellPosition = Int(cell.id) {
-            let topNeighbor = aliveCellPosition - 10
-            let topLeftNeighbor = aliveCellPosition - 11
-            let topRightNeighbor = aliveCellPosition - 9
-            
-            let centerLeftNeighbor = aliveCellPosition - 1
-            let centerRightNeighbor = aliveCellPosition + 1
-            
-            let bottomNeighbor = aliveCellPosition + 10
-            let bottomLeftNeighbor = aliveCellPosition + 9
-            let bottomRightNeighbor = aliveCellPosition + 11
-            
-            if aliveCellPosition == 0{
-                neighborsCells = [centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
-            }else if aliveCellPosition == 9{
-                neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor]
-            }else if aliveCellPosition == 90{
-                neighborsCells = [centerRightNeighbor,topRightNeighbor,topNeighbor]
-            }else if aliveCellPosition == 99{
-                neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor]
-            }else if Constants.upperBound.contains(aliveCellPosition){
-                neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor,bottomRightNeighbor,centerRightNeighbor]
-            }else if Constants.leftBound.contains(aliveCellPosition){
-                neighborsCells = [topNeighbor,topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
-            }else if Constants.lowerBound.contains(aliveCellPosition){
-                neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor,topRightNeighbor,centerRightNeighbor]
-            }else if Constants.rightBound.contains(aliveCellPosition){
-                neighborsCells = [bottomNeighbor,bottomLeftNeighbor,centerLeftNeighbor,topLeftNeighbor,topNeighbor]
-            }
-            else{
-                neighborsCells =
-                [
-                    centerLeftNeighbor,topLeftNeighbor,topNeighbor,
-                    topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,
-                    bottomNeighbor,bottomLeftNeighbor
-                ]
-            }
+        let aliveCellPosition = cell.id
+        let topNeighbor = aliveCellPosition - 10
+        let topLeftNeighbor = aliveCellPosition - 11
+        let topRightNeighbor = aliveCellPosition - 9
+        
+        let centerLeftNeighbor = aliveCellPosition - 1
+        let centerRightNeighbor = aliveCellPosition + 1
+        
+        let bottomNeighbor = aliveCellPosition + 10
+        let bottomLeftNeighbor = aliveCellPosition + 9
+        let bottomRightNeighbor = aliveCellPosition + 11
+        
+        if aliveCellPosition == 0{
+            neighborsCells = [centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
+        }else if aliveCellPosition == 9{
+            neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor]
+        }else if aliveCellPosition == 90{
+            neighborsCells = [centerRightNeighbor,topRightNeighbor,topNeighbor]
+        }else if aliveCellPosition == 99{
+            neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor]
+        }else if Constants.upperBound.contains(aliveCellPosition){
+            neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor,bottomRightNeighbor,centerRightNeighbor]
+        }else if Constants.leftBound.contains(aliveCellPosition){
+            neighborsCells = [topNeighbor,topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
+        }else if Constants.lowerBound.contains(aliveCellPosition){
+            neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor,topRightNeighbor,centerRightNeighbor]
+        }else if Constants.rightBound.contains(aliveCellPosition){
+            neighborsCells = [bottomNeighbor,bottomLeftNeighbor,centerLeftNeighbor,topLeftNeighbor,topNeighbor]
         }
+        else{
+            neighborsCells =
+            [
+                centerLeftNeighbor,topLeftNeighbor,topNeighbor,
+                topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,
+                bottomNeighbor,bottomLeftNeighbor
+            ]
+        }
+        
         return neighborsCells
     }
     

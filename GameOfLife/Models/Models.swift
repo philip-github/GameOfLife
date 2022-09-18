@@ -9,7 +9,7 @@
 import Foundation
 
 struct Cell {
-    var id: String
+    var id: Int
     var lifeStatus: LifeStatus
 }
 
@@ -23,7 +23,7 @@ func generateData() -> [Cell] {
     for i in 0..<100 {
         gameModel.append(
             Cell(
-                id: "\(i)",
+                id: i,
                 lifeStatus: .dead)
         )
     }
