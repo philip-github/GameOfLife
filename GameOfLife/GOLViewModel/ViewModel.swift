@@ -62,43 +62,43 @@ class GOLViewModel {
     
     func configureNeighborsForCell(cell: Cell) -> [Int] {
         var neighborsCells = [Int]()
-        guard let aliveCellPosition = Int(cell.id) else { return [] }
-        
-        let topNeighbor = aliveCellPosition - 10
-        let topLeftNeighbor = aliveCellPosition - 11
-        let topRightNeighbor = aliveCellPosition - 9
-        
-        let centerLeftNeighbor = aliveCellPosition - 1
-        let centerRightNeighbor = aliveCellPosition + 1
-        
-        let bottomNeighbor = aliveCellPosition + 10
-        let bottomLeftNeighbor = aliveCellPosition + 9
-        let bottomRightNeighbor = aliveCellPosition + 11
-        
-        if aliveCellPosition == 0{
-            neighborsCells = [centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
-        }else if aliveCellPosition == 9{
-            neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor]
-        }else if aliveCellPosition == 90{
-            neighborsCells = [centerRightNeighbor,topRightNeighbor,topNeighbor]
-        }else if aliveCellPosition == 99{
-            neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor]
-        }else if Constants.upperBound.contains(aliveCellPosition){
-            neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor,bottomRightNeighbor,centerRightNeighbor]
-        }else if Constants.leftBound.contains(aliveCellPosition){
-            neighborsCells = [topNeighbor,topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
-        }else if Constants.lowerBound.contains(aliveCellPosition){
-            neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor,topRightNeighbor,centerRightNeighbor]
-        }else if Constants.rightBound.contains(aliveCellPosition){
-            neighborsCells = [bottomNeighbor,bottomLeftNeighbor,centerLeftNeighbor,topLeftNeighbor,topNeighbor]
-        }
-        else{
-            neighborsCells =
-            [
-                centerLeftNeighbor,topLeftNeighbor,topNeighbor,
-                topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,
-                bottomNeighbor,bottomLeftNeighbor
-            ]
+        if let aliveCellPosition = Int(cell.id) {
+            let topNeighbor = aliveCellPosition - 10
+            let topLeftNeighbor = aliveCellPosition - 11
+            let topRightNeighbor = aliveCellPosition - 9
+            
+            let centerLeftNeighbor = aliveCellPosition - 1
+            let centerRightNeighbor = aliveCellPosition + 1
+            
+            let bottomNeighbor = aliveCellPosition + 10
+            let bottomLeftNeighbor = aliveCellPosition + 9
+            let bottomRightNeighbor = aliveCellPosition + 11
+            
+            if aliveCellPosition == 0{
+                neighborsCells = [centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
+            }else if aliveCellPosition == 9{
+                neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor]
+            }else if aliveCellPosition == 90{
+                neighborsCells = [centerRightNeighbor,topRightNeighbor,topNeighbor]
+            }else if aliveCellPosition == 99{
+                neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor]
+            }else if Constants.upperBound.contains(aliveCellPosition){
+                neighborsCells = [centerLeftNeighbor,bottomLeftNeighbor,bottomNeighbor,bottomRightNeighbor,centerRightNeighbor]
+            }else if Constants.leftBound.contains(aliveCellPosition){
+                neighborsCells = [topNeighbor,topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,bottomNeighbor]
+            }else if Constants.lowerBound.contains(aliveCellPosition){
+                neighborsCells = [centerLeftNeighbor,topLeftNeighbor,topNeighbor,topRightNeighbor,centerRightNeighbor]
+            }else if Constants.rightBound.contains(aliveCellPosition){
+                neighborsCells = [bottomNeighbor,bottomLeftNeighbor,centerLeftNeighbor,topLeftNeighbor,topNeighbor]
+            }
+            else{
+                neighborsCells =
+                [
+                    centerLeftNeighbor,topLeftNeighbor,topNeighbor,
+                    topRightNeighbor,centerRightNeighbor,bottomRightNeighbor,
+                    bottomNeighbor,bottomLeftNeighbor
+                ]
+            }
         }
         return neighborsCells
     }
