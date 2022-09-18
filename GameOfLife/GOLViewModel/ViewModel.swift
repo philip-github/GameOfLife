@@ -27,29 +27,32 @@ class GOLViewModel {
             }
             return myModel
         }
-        var tempModel = [[Cell]]()
+        var newCells = [Cell]()
         for cell in aliveCells {
             let neighbors = configureNeighborsForCell(cell: cell)
-            let (aliveNeighborsForAliveCell, deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(model: myModel, neighbors: neighbors, cell: cell)
+            let (aliveNeighborsForAliveCell,
+                 deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(model: myModel,
+                                                                           neighbors: neighbors,
+                                                                           cell: cell)
             if aliveNeighborsForAliveCell.count < 2 {
                 var myCell = cell
                 myCell.lifeStatus = .dead
-                tempModel.append([myCell])
+                newCells.append(myCell)
                 continue
             }else if aliveNeighborsForAliveCell.count > 3 {
                 var myCell = cell
                 myCell.lifeStatus = .dead
-                tempModel.append([myCell])
+                newCells.append(myCell)
                 continue
             }
             let deadNeighborCells = deadNeighborsForAliveCell.map({ return myModel[$0] })
-            let rebornCells = checkDeadNeighborsForReborn(deadCells: deadNeighborCells, model: myModel)
+            let rebornCells = checkDeadNeighborsForReborn(deadCells: deadNeighborCells,
+                                                          model: myModel)
             if rebornCells.count > 0 {
-                tempModel.append(rebornCells)
+                newCells.append(contentsOf: rebornCells)
             }
         }
-        let flatModel = tempModel.flatMap({ return $0 })
-        for i in flatModel {
+        for i in newCells {
             if let value = Int(i.id){
                 myModel[value] = i
             }
@@ -110,7 +113,9 @@ class GOLViewModel {
         var rebornCells = [Cell]()
         for cell in deadCells{
             let cellNeighbors = configureNeighborsForCell(cell: cell)
-            let (aliveNeighbors, _) = checkNeighborCellsLifeStatus(model: model, neighbors: cellNeighbors, cell: cell)
+            let (aliveNeighbors, _) = checkNeighborCellsLifeStatus(model: model,
+                                                                   neighbors: cellNeighbors,
+                                                                   cell: cell)
             if aliveNeighbors.count == 3 {
                 var rebornedCell = cell
                 rebornedCell.lifeStatus = .alive
