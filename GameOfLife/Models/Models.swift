@@ -5,11 +5,11 @@
 //  Created by Philip Twal on 9/14/22.
 //
 
-func generateData() -> [GameModel] {
-    var gameModel = [GameModel]()
+func generateData() -> [Cell] {
+    var gameModel = [Cell]()
     for i in 0..<100 {
         gameModel.append(
-            GameModel(
+            Cell(
                 id: "\(i)",
                 lifeStatus: .dead)
         )
@@ -20,7 +20,7 @@ func generateData() -> [GameModel] {
 
 import Foundation
 
-struct GameModel {
+struct Cell {
     var id: String
     var lifeStatus: LifeStatus
 }

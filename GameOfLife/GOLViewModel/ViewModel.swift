@@ -16,7 +16,7 @@ class GOLViewModel {
         static let rightBound = [9,19,29,39,49,59,69,79,89,99]
     }
     
-    func play(with model: [GameModel]) -> [GameModel]? {
+    func play(with model: [Cell]) -> [Cell]? {
         var myModel = model
         let aliveCells = model.filter({ return $0.lifeStatus == .alive }) // O(n)
         if aliveCells.count <= 2{
@@ -27,11 +27,11 @@ class GOLViewModel {
             }
             return myModel
         }
-        var tempModel = [[GameModel]]()
+        var tempModel = [[Cell]]()
         for cell in aliveCells {
             let neighbors = configureNeighborsForCell(cell: cell)
             let (aliveNeighborsForAliveCell, deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(model: myModel, neighbors: neighbors, cell: cell)
-            if aliveNeighborsForAliveCell.count < 2{
+            if aliveNeighborsForAliveCell.count < 2 {
                 var myCell = cell
                 myCell.lifeStatus = .dead
                 tempModel.append([myCell])
@@ -57,7 +57,7 @@ class GOLViewModel {
         return myModel
     }
     
-    func configureNeighborsForCell(cell: GameModel) -> [Int] {
+    func configureNeighborsForCell(cell: Cell) -> [Int] {
         var neighborsCells = [Int]()
         guard let aliveCellPosition = Int(cell.id) else { return [] }
         
@@ -100,14 +100,14 @@ class GOLViewModel {
         return neighborsCells
     }
     
-    func checkNeighborCellsLifeStatus(model: [GameModel], neighbors: [Int], cell: GameModel) -> (alive: [Int], dead: [Int]) {
+    func checkNeighborCellsLifeStatus(model: [Cell], neighbors: [Int], cell: Cell) -> (alive: [Int], dead: [Int]) {
         let aliveNeighbors = neighbors.filter({ return model[$0].lifeStatus == .alive })
         let deadNeighbors = neighbors.filter({ return model[$0].lifeStatus == .dead })
         return (aliveNeighbors,deadNeighbors)
     }
     
-    func checkDeadNeighborsForReborn(deadCells: [GameModel], model: [GameModel]) -> [GameModel] {
-        var rebornCells = [GameModel]()
+    func checkDeadNeighborsForReborn(deadCells: [Cell], model: [Cell]) -> [Cell] {
+        var rebornCells = [Cell]()
         for cell in deadCells{
             let cellNeighbors = configureNeighborsForCell(cell: cell)
             let (aliveNeighbors, _) = checkNeighborCellsLifeStatus(model: model, neighbors: cellNeighbors, cell: cell)

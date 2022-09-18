@@ -22,7 +22,7 @@ class GridCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with model: GameModel) {
+    func configure(with model: Cell) {
         switch model.lifeStatus {
         case .alive:
             contentView.backgroundColor = .link

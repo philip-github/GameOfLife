@@ -10,7 +10,7 @@ import UIKit
 final class GridViewController: UIViewController {
     
     private var collectionView: UICollectionView?
-    private var gameModel = [GameModel]()
+    private var gameModel = [Cell]()
     
     private let button: UIButton = {
         let button = UIButton()
