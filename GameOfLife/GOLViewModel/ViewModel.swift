@@ -31,9 +31,8 @@ class GOLViewModel {
         for cell in aliveCells {
             let neighbors = configureNeighborsForCell(cell: cell)
             let (aliveNeighborsForAliveCell,
-                 deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(model: myModel,
-                                                                           neighbors: neighbors,
-                                                                           cell: cell)
+                 deadNeighborsForAliveCell) = checkNeighborCellsLifeStatus(cells: myModel,
+                                                                           neighborsPositions: neighbors)
             if aliveNeighborsForAliveCell.count < 2 {
                 var myCell = cell
                 myCell.lifeStatus = .dead
@@ -105,9 +104,9 @@ class GOLViewModel {
         return neighborsCells
     }
     
-    func checkNeighborCellsLifeStatus(model: [Cell], neighbors: [Int], cell: Cell) -> (alive: [Int], dead: [Int]) {
-        let aliveNeighbors = neighbors.filter({ return model[$0].lifeStatus == .alive })
-        let deadNeighbors = neighbors.filter({ return model[$0].lifeStatus == .dead })
+    func checkNeighborCellsLifeStatus(cells: [Cell], neighborsPositions: [Int]) -> (alive: [Int], dead: [Int]) {
+        let aliveNeighbors = neighborsPositions.filter({ return cells[$0].lifeStatus == .alive })
+        let deadNeighbors = neighborsPositions.filter({ return cells[$0].lifeStatus == .dead })
         return (aliveNeighbors,deadNeighbors)
     }
     
@@ -115,9 +114,8 @@ class GOLViewModel {
         var rebornCells = [Cell]()
         for cell in deadCells{
             let cellNeighbors = configureNeighborsForCell(cell: cell)
-            let (aliveNeighbors, _) = checkNeighborCellsLifeStatus(model: model,
-                                                                   neighbors: cellNeighbors,
-                                                                   cell: cell)
+            let (aliveNeighbors, _) = checkNeighborCellsLifeStatus(cells: model,
+                                                                   neighborsPositions: cellNeighbors)
             if aliveNeighbors.count == 3 {
                 var rebornedCell = cell
                 rebornedCell.lifeStatus = .alive
