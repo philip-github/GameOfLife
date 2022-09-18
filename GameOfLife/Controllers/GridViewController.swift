@@ -75,12 +75,10 @@ final class GridViewController: UIViewController {
     
     
     @objc private func didTapPlayButton(){
-        guard gameModel.count > 0 else { return }
-        if let newModel = viewModel.configureGamePlay(with: gameModel) {
-            DispatchQueue.main.async { [weak self] in
-                self?.gameModel = newModel
-                self?.collectionView?.reloadData()
-            }
+        let newModel = viewModel.configureGamePlay(with: gameModel)
+        DispatchQueue.main.async { [weak self] in
+            self?.gameModel = newModel
+            self?.collectionView?.reloadData()
         }
     }
     
